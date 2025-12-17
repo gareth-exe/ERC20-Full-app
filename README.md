@@ -1,74 +1,40 @@
 # Full Stack ERC20 App
 
-This repository contains EVERYTHING.
+This repository contains a complete full-stack ERC20 application, including a Solidity smart contract backend, a Web3.js web application, and a mobile-ready JSON frontend.
 
-1. Backend: ERC20 contract written in solidity
-2. Web Frontend: Web3.js DApp.
-3. Mobile Frontend: JSON markup for [Jasonette](https://www.jasonette.com)
-
-This document will explain how these all come together, and walk you through everything you need to do to deploy a contract to Ethereum, build a web app, and build a mobile app.
-
-# 1. Backend
-
-The "backend" is just a set of solidity contracts. This tutorial is not about writing ERC20 tokens or smart contracts so we're just going to use the most basic token possible.
-
-![zeppelin](https://openzeppelin.org/img/logo-zeppelin.png)
-
-99% of it is copy and pasted from Openzeppelin's [Zeppelin-solidity](https://github.com/OpenZeppelin/zeppelin-solidity) repository. The following code are 100% copy and pastes:
-
-- [BasicToken.sol](contracts/BasicToken.sol)
-- [ERC20.sol](contracts/ERC20.sol)
-- [ERC20Basic.sol](contracts/ERC20Basic.sol)
-- [SafeMath.sol](contracts/SafeMath.sol)
-- [StandardToken.sol](contracts/StandardToken.sol)
-
-1% of it is customization:
-
-- [ExampleToken.sol](contracts/ExampleToken.sol)
-
-The `ExampleToken` is the only contract that I've tweaked, just to customize the symbol, decimals, and total supply
-
-For simplicity, I didn't use any frameworks like [Truffle](https://github.com/trufflesuite/truffle).
-
-## Deployment
-
-You can go to [Remix](https://remix.ethereum.org), copy and paste all the files in [contracts](contracts) folder, and deploy to Ethereum.
-
-There are many tutorials on how to do this online. Google them.
-
-In my case, I have deployed it to [rinkeby](https://www.rinkeby.io/#stats) testnet, and the resulting contract address is [0x3823619872186eff668aad8192590faaffef6a5f](https://rinkeby.etherscan.io/address/0x3823619872186eff668aad8192590faaffef6a5f).
-
-We will use [this contract address in the DApp](https://github.com/gliechtenstein/erc20/blob/master/web/index.html#L190) to connect to the contract.
+The project demonstrates how an ERC20 token can be created, deployed, and interacted with across multiple platforms using the same Ethereum smart contract.
 
 ---
 
-# 2. Web
+## Project Overview
 
-The entire DApp is a single HTML file. It uses a JavaScript app framework called [cell.js](https://www.celljs.org) to implement the app in as simple manner as possible. 
+The application is divided into three main parts:
 
-**You can try it out here: https://gliechtenstein.github.io/erc20/web/**
+### Backend
+- ERC20 smart contract written in Solidity  
+- Based on standard ERC20 logic  
+- Custom token configuration including name, symbol, decimals, and total supply  
 
-![img](https://gliechtenstein.github.io/images/dapp.png)
+### Web Frontend
+- Browser-based decentralized application built with Web3.js  
+- Connects directly to the deployed ERC20 contract  
+- Allows users to view balances and send tokens  
 
-Note that:
+### Mobile Frontend
+- JSON-based mobile interface  
+- Displays token information and supports token transfers  
+- Uses QR code scanning for wallet and recipient addresses  
 
-- For simplicity, only [two external libraries](https://github.com/gliechtenstein/erc20/blob/master/web/index.html#L38) are used: [web3.js](https://github.com/ethereum/web3.js/) and [cell.js](https://github.com/intercellular/cell)
-- You can see the entire code transparently (no compilation, etc.) when you ["view source" from the web app](https://gliechtenstein.github.io/erc20/web/)
-- The app uses version 0.14.0 (not ver 1.0+) of web3.js library
+---
 
-Learn more about the web frontend: [Web app tutorial](web/tutorial.md)
+## Deployment
 
+The smart contract can be deployed using Remix IDE by compiling and deploying the Solidity contracts to an Ethereum network.
 
-# 3. Mobile
+Once deployed, the contract address is used by both the web and mobile applications to interact with the token.
 
-The mobile frontend is powered by [Jasonette](https://www.jasonette.com), a markup driven approach to building mobile apps.
+---
 
-![img](https://gliechtenstein.github.io/images/erc20.gif)
+## Purpose
 
-Jasonette is view-oriented. Therefore everything revolves around views. There are three views in the app:
-
-1. Main view: Display ERC20 token stats and send tokens
-2. Private key QR code scanner: For importing user's private key
-3. Receiver Public key QR code scanner: To send a token to another user, you need to scan the user's public key
-
-Learn more about the mobile frontend: [Mobile app tutorial](mobile/tutorial.md)
+This project is intended as a learning example of full-stack blockchain development, showing how smart contracts, web applications, and mobile interfaces can work together in an ERC20 ecosystem.

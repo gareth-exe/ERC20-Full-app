@@ -1,118 +1,74 @@
-Full Stack ERC20 App
+# Full Stack ERC20 App
 
-This repository contains a complete full-stack ERC20 application, including the smart contract backend, a web-based DApp, and a mobile-friendly frontend.
+This repository contains EVERYTHING.
 
-The project demonstrates how an ERC20 token can be created, deployed, and interacted with across different platforms using Web3 technologies.
+1. Backend: ERC20 contract written in solidity
+2. Web Frontend: Web3.js DApp.
+3. Mobile Frontend: JSON markup for [Jasonette](https://www.jasonette.com)
 
-Project Overview
+This document will explain how these all come together, and walk you through everything you need to do to deploy a contract to Ethereum, build a web app, and build a mobile app.
 
-Backend
+# 1. Backend
 
-ERC20 smart contract written in Solidity
+The "backend" is just a set of solidity contracts. This tutorial is not about writing ERC20 tokens or smart contracts so we're just going to use the most basic token possible.
 
-Web Frontend
+![zeppelin](https://openzeppelin.org/img/logo-zeppelin.png)
 
-Lightweight Web3.js DApp
+99% of it is copy and pasted from Openzeppelin's [Zeppelin-solidity](https://github.com/OpenZeppelin/zeppelin-solidity) repository. The following code are 100% copy and pastes:
 
-Mobile Frontend
+- [BasicToken.sol](contracts/BasicToken.sol)
+- [ERC20.sol](contracts/ERC20.sol)
+- [ERC20Basic.sol](contracts/ERC20Basic.sol)
+- [SafeMath.sol](contracts/SafeMath.sol)
+- [StandardToken.sol](contracts/StandardToken.sol)
 
-JSON-based mobile interface (Jasonette-style)
+1% of it is customization:
 
-This repository explains how all components work together and provides a simple workflow for deploying the contract and connecting both web and mobile clients.
+- [ExampleToken.sol](contracts/ExampleToken.sol)
 
-1. Backend (Smart Contracts)
+The `ExampleToken` is the only contract that I've tweaked, just to customize the symbol, decimals, and total supply
 
-The backend consists of Solidity smart contracts that implement the ERC20 token standard.
+For simplicity, I didn't use any frameworks like [Truffle](https://github.com/trufflesuite/truffle).
 
-The majority of the ERC20 logic is based on trusted OpenZeppelin implementations to ensure security and reliability.
+## Deployment
 
-Contracts Used
+You can go to [Remix](https://remix.ethereum.org), copy and paste all the files in [contracts](contracts) folder, and deploy to Ethereum.
 
-ERC20
+There are many tutorials on how to do this online. Google them.
 
-ERC20Basic
+In my case, I have deployed it to [rinkeby](https://www.rinkeby.io/#stats) testnet, and the resulting contract address is [0x3823619872186eff668aad8192590faaffef6a5f](https://rinkeby.etherscan.io/address/0x3823619872186eff668aad8192590faaffef6a5f).
 
-SafeMath
+We will use [this contract address in the DApp](https://github.com/gliechtenstein/erc20/blob/master/web/index.html#L190) to connect to the contract.
 
-StandardToken
+---
 
-BasicToken
+# 2. Web
 
-These contracts handle token transfers, balances, and total supply logic.
+The entire DApp is a single HTML file. It uses a JavaScript app framework called [cell.js](https://www.celljs.org) to implement the app in as simple manner as possible. 
 
-Custom Contract
+**You can try it out here: https://gliechtenstein.github.io/erc20/web/**
 
-ExampleToken.sol
+![img](https://gliechtenstein.github.io/images/dapp.png)
 
-This is the only customized contract in the project. It defines:
+Note that:
 
-Token name
+- For simplicity, only [two external libraries](https://github.com/gliechtenstein/erc20/blob/master/web/index.html#L38) are used: [web3.js](https://github.com/ethereum/web3.js/) and [cell.js](https://github.com/intercellular/cell)
+- You can see the entire code transparently (no compilation, etc.) when you ["view source" from the web app](https://gliechtenstein.github.io/erc20/web/)
+- The app uses version 0.14.0 (not ver 1.0+) of web3.js library
 
-Symbol
+Learn more about the web frontend: [Web app tutorial](web/tutorial.md)
 
-Decimals
 
-Initial total supply
+# 3. Mobile
 
-No development frameworks such as Truffle or Hardhat were used to keep the setup simple and transparent.
+The mobile frontend is powered by [Jasonette](https://www.jasonette.com), a markup driven approach to building mobile apps.
 
-Deployment
+![img](https://gliechtenstein.github.io/images/erc20.gif)
 
-To deploy the contract:
+Jasonette is view-oriented. Therefore everything revolves around views. There are three views in the app:
 
-Open Remix IDE
+1. Main view: Display ERC20 token stats and send tokens
+2. Private key QR code scanner: For importing user's private key
+3. Receiver Public key QR code scanner: To send a token to another user, you need to scan the user's public key
 
-Copy all files from the contracts folder
-
-Compile and deploy the contract to an Ethereum network (testnet recommended)
-
-Once deployed, copy the contract address.
-This address is required for both the web and mobile applications to interact with the token.
-
-2. Web Frontend
-
-The web application is implemented as a single HTML file that interacts directly with the deployed ERC20 contract.
-
-Key Points
-
-Uses Web3.js
-
-No build tools or compilation required
-
-Entire logic is visible in the source code
-
-Connects to the deployed ERC20 contract using its address
-
-Allows users to:
-
-View token balances
-
-Send tokens
-
-Interact with the contract through a browser wallet
-
-This approach keeps the DApp easy to understand and beginner-friendly.
-
-3. Mobile Frontend
-
-The mobile version is built using a JSON-based, markup-driven approach inspired by Jasonette.
-
-The mobile app is view-based and consists of multiple screens:
-
-Views
-
-Main View
-
-Displays token information
-
-Allows token transfers
-
-Private Key Scanner
-
-Imports a user wallet via QR code
-
-Recipient Scanner
-
-Scans a recipient address QR code for sending tokens
-
-The mobile app connects to the same ERC20 contract used by the web app, ensuring consistency across platforms.
+Learn more about the mobile frontend: [Mobile app tutorial](mobile/tutorial.md)
